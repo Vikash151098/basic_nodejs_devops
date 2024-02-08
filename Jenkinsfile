@@ -1,23 +1,23 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+                    image 'node:20-alpine'
+        }
+    }
     stages {
         stage('git checkout') {
             steps {
                 checkout scm
             }
         }
-        
+
         stage('Build') {
-            agent {
-                docker {
-                    image 'node:20-alpine'
-                }
-            }
+            
             steps {
                 echo 'Building..'
-                sh "npm install -f"
-                sh "docker compose up -d"
-                echo "build finish..."
+                sh 'npm install -f'
+                sh 'docker compose up -d'
+                echo 'build finish...'
             }
         }
         stage('Deploy') {
