@@ -6,11 +6,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
+        
         stage('Build') {
             steps {
                 echo 'Building..'
