@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('git checkout') {
             steps {
-                checkout scm
+                sh "git credentialsId: 'github namepass', url: 'https://github.com/Vikash151098/basic_nodejs_devops.git'"
             }
         }
         
