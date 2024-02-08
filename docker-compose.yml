@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  expressjs_basic:
+    container_name: expressjs_basic_c
+    image: expressjs_basic_i
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/app
