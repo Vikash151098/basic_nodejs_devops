@@ -8,9 +8,16 @@ pipeline {
         }
         
         stage('Build') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                }
+            }
             steps {
-                sh "docker compose up -d"
                 echo 'Building..'
+                sh "npm install -f"
+                sh "docker compose up -d"
+                echo "build finish..."
             }
         }
         stage('Deploy') {
