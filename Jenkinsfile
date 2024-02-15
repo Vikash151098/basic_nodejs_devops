@@ -11,7 +11,7 @@ pipeline {
         stage("stop older container and auto remove")
         {
             steps{
-                sh "docker stop $(docker ps -a -q)"
+                sh "docker stop expressjs_basic_c"
             }
         }
 
