@@ -25,7 +25,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                // sh "docker stop expressjs_basic_c"
                 sh "docker run -d --rm -p 4000:4000 --name expressjs_basic_c  expressjs_basic_i:${env.BUILD_ID}"
             }
         }
