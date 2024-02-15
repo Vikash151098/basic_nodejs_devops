@@ -8,6 +8,13 @@ pipeline {
             }
         }
 
+        stage("stop older container and auto remove")
+        {
+            steps{
+                sh "docker stop $(docker ps -a -q)"
+            }
+        }
+
         stage('Build Image') {
             steps {
                 echo 'Building..'
