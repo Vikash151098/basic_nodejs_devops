@@ -8,10 +8,10 @@ pipeline {
             }
         }
 
-        stage("stop older container and auto remove")
+        stage('stop older container and auto remove')
         {
             steps{
-                sh "docker stop expressjs_basic_c"
+                sh 'docker stop expressjs_basic_c'
             }
         }
 
@@ -28,6 +28,12 @@ pipeline {
                 sh "docker run -d --rm -p 4000:4000 --name expressjs_basic_c  expressjs_basic_i:${env.BUILD_ID}"
             }
         }
+        stage('Clean Older Images')
+        {
+            steps {
+                sh 'docker image prune -a -f'
+            }
+        }
     }
 
     post {
@@ -35,13 +41,13 @@ pipeline {
             echo 'This will always run'
         }
         success {
-            echo 'This will run only if successful'
+            echo 'Build Successful'
         }
         failure {
-            echo 'This will run only if failed'
+            echo 'Build Failed'
         }
         unstable {
-            echo 'This will run only if the run was marked as unstable'
+            echo 'Build unstable'
         }
         changed {
             echo 'This will run only if the state of the Pipeline has changed'
