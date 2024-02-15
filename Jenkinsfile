@@ -11,7 +11,13 @@ pipeline {
         stage('stop older container and auto remove')
         {
             steps{
-                sh 'docker stop expressjs_basic_c'
+                script{
+                    def doc_containers = sh(returnStdout: true, script: 'docker container ps -aq').replaceAll('\n', ' ') 
+                    if (doc_containers) {
+                        sh "docker stop ${doc_containers}"
+                    }
+                    
+                }
             }
         }
 
