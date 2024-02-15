@@ -8,14 +8,18 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Image') {
             steps {
                 echo 'Building..'
+                echo "build number :${env.BUILD_ID}"
+                sh "docker build -t expressjs_basic_i:${env.BUILD_ID} ."
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                // sh "docker stop expressjs_basic_c"
+                // sh "docker run -d --rm -p 4000:4000 --name expressjs_basic_c  expressjs_basic_i:${env.BUILD_ID}"
             }
         }
     }
