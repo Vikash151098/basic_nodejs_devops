@@ -1,5 +1,13 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKER_IMAGE_NAME = 'expressjs_basic_i'
+        DOCKER_CONTAINER_NAME = 'expressjs_basic_c'
+        HOST_PORT = '4000'
+        CONTAINER_PORT = '4000'
+    }
+
     stages {
         stage('git checkout') {
             steps {
@@ -25,13 +33,13 @@ pipeline {
             steps {
                 echo 'Building..'
                 echo "build number :${env.BUILD_ID}"
-                sh "docker build -t expressjs_basic_i:${env.BUILD_ID} ."
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID} ."
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "docker run -d --rm -p 4000:4000 --name expressjs_basic_c  expressjs_basic_i:${env.BUILD_ID}"
+                sh "docker run -d --rm -p ${HOST_PORT}:${CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
             }
         }
         stage('Clean Older Images')
